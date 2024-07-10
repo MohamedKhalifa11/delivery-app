@@ -6,9 +6,9 @@ import "swiper/css/autoplay";
 import { Autoplay, Pagination } from "swiper/modules";
 import "../../../styles/slider.css";
 
-import ava01 from "../../../assets/images/portrait-handsome-bearded-man.jpg";
-import ava02 from "../../../assets/images/portrait-man-laughing.jpg";
-import ava03 from "../../../assets/images/portrait-white-man-isolated.jpg";
+import ava01 from "../../../assets/images/ava01.jpg";
+import ava02 from "../../../assets/images/ava02.jpg";
+import ava03 from "../../../assets/images/ava03.jpg";
 
 const TestimonialSlider = () => {
   return (

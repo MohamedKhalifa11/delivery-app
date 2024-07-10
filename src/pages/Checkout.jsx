@@ -13,9 +13,11 @@ const Checkout = () => {
   const [postalCode, setPostalCode] = useState("");
 
   const shippingInfo = [];
+  // Retrieve cart total amount from the Redux store
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const shippingCost = 5;
+  const shippingCost = 5; // Fixed shipping cost
 
+  // Calculate total amount including shipping cost
   const totalAmount = cartTotalAmount + Number(shippingCost);
 
   const submitHandler = (e) => {
@@ -34,8 +36,7 @@ const Checkout = () => {
   };
 
   return (
-    <Helmet title="Checkout">
-      {/* <CommonSection title="Checkout" /> */}
+    <Helmet title="Checkout"> {/* Set the page title to "Checkout" */}
       <section>
         <div className="container">
           <div className="row">

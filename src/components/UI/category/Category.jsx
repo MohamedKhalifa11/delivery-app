@@ -5,6 +5,7 @@ import categoryImg04 from "../../../assets/images/category-04.png";
 
 import "../../../styles/category.css";
 
+// Array containing category data with display names and images to use them
 const categoryData = [
   {
     display: "Pizza",
@@ -31,6 +32,7 @@ const Category = () => {
   return (
     <div className="container">
       <div className="row">
+        {/* Map through categoryData array and render each category item */}
         {categoryData.map((item, index) => (
           <div className="col-lg-3 col-md-4 col-sm-6 col-6 mb-4" key={index}>
             <div className="category__item d-flex align-items-center gap-3">

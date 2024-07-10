@@ -14,6 +14,7 @@ import networkImg from "../assets/images/Online Review-pana.svg";
 import TestimonialSlider from "../components/UI/slider/TestimonialSlider.jsx";
 import { ProductsContext } from "../context/ProductsContext.jsx";
 
+// Array data for feature section
 const featureData = [
   {
     title: "Quick Delivery",
@@ -33,9 +34,7 @@ const featureData = [
 ];
 
 const Home = () => {
-  // const [category, setCategory] = useState("ALL");
-  // const [allProducts, setAllProducts] = useState(products);
-  const products = useContext(ProductsContext);
+  const products = useContext(ProductsContext); // Context for Foods data
   const [hotPizza, setHotPizza] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -43,44 +42,17 @@ const Home = () => {
     if (products.length > 0) {
       setLoading(false);
     }
+
+    // Filter and slice products to get the top 4 pizzas
     const filteredPizza = products.filter((item) => item.category === "Pizza");
     const slicePizza = filteredPizza.slice(0, 4);
     setHotPizza(slicePizza);
   }, [products]);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // useEffect(() => {
-  //   if (category === "ALL") {
-  //     setAllProducts(products);
-  //   }
-
-  //   if (category === "BURGER") {
-  //     const filteredProducts = products.filter(
-  //       (item) => item.category === "Burger"
-  //     );
-  //     setAllProducts(filteredProducts);
-  //   }
-
-  //   if (category === "PIZZA") {
-  //     const filteredProducts = products.filter(
-  //       (item) => item.category === "Pizza"
-  //     );
-  //     setAllProducts(filteredProducts);
-  //   }
-
-  //   if (category === "BREAD") {
-  //     const filteredProducts = products.filter(
-  //       (item) => item.category === "Bread"
-  //     );
-  //     setAllProducts(filteredProducts);
-  //   }
-  // }, [category]);
-
   return (
     <Helmet title="Home">
+      {/* Set the page title to "Home" */}
+      {/* Hero Section */}
       <section>
         <div className="container">
           <div className="row">
@@ -128,9 +100,13 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Category Section */}
       <section className="pt-0">
         <Category />
       </section>
+
+      {/* Feature Section */}
       <section>
         <div className="container">
           <div className="row">
@@ -166,74 +142,13 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <section>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <h2>Popular Foods</h2>
-            </div>
-
-            <div className="col-lg-12">
-              <div className="food__category d-flex align-items-center justify-content-center gap-4">
-                <button
-                  className={`all__btn ${
-                    category === "ALL" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("ALL")}
-                >
-                  All
-                </button>
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BURGER" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("BURGER")}
-                >
-                  <img src={foodCategoryImg01} alt="" />
-                  Burger
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "PIZZA" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("PIZZA")}
-                >
-                  <img src={foodCategoryImg02} alt="" />
-                  Pizza
-                </button>
-
-                <button
-                  className={`d-flex align-items-center gap-2 ${
-                    category === "BREAD" ? "foodBtnActive" : ""
-                  }`}
-                  onClick={() => setCategory("BREAD")}
-                >
-                  <img src={foodCategoryImg03} alt="" />
-                  Bread
-                </button>
-              </div>
-            </div>
-
-            {allProducts.map((item) => (
-              <div
-                className="col-lg-3 col-md-4 col-sm-6 col-xs-6 mt-5"
-                key={item.id}
-              >
-                <ProductCard item={item} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
+      {/* Why Pizza Time! Section */}
       <section className="why__choose-us">
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <img src={whyImg} alt="why-tasty-treat" className="w-100" />
             </div>
-
             <div className="col-lg-6 col-md-6">
               <div className="why__tasty-treat">
                 <h2 className="tasty__treat-title mb-4">
@@ -285,17 +200,17 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
 
+        {/* Hot Pizza Section */}
+      </section>
       <section className="pt-0">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center mb-5">
               <h2>Hot Pizza</h2>
             </div>
-
             {loading ? (
-              <div>Loading</div>
+              <div>Loading...</div>
             ) : (
               hotPizza.map((item) => (
                 <div
@@ -310,6 +225,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Feedback Section */}
       <section>
         <div className="container">
           <div className="row">
@@ -328,7 +244,6 @@ const Home = () => {
                 <TestimonialSlider />
               </div>
             </div>
-
             <div className="col-lg-6 col-md-6">
               <img src={networkImg} alt="testimonial-img" className="w-100" />
             </div>

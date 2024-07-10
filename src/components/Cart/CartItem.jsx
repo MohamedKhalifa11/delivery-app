@@ -1,37 +1,33 @@
-import "../../../styles/cart-item.css";
+import "../../styles/cart-item.css";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../../../store/shopping-cart/cartSlice";
+import { cartActions } from "../../store/shopping-cart/cartSlice";
 import PropTypes from "prop-types";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, layout }) => {
   const { id, name, price, image, quantity, totalPrice } = item;
-
   const dispatch = useDispatch();
 
+  // Increment the quantity of the item
   const incrementItem = () => {
-    dispatch(
-      cartActions.addItem({
-        id,
-        name,
-        price,
-        image,
-      })
-    );
+    dispatch(cartActions.addItem({ id, name, price, image }));
   };
 
+  // Decrement the quantity of the item
   const decreaseItem = () => {
     dispatch(cartActions.removeItem(id));
   };
 
+  // Delete the item from the cart
   const deleteItem = () => {
     dispatch(cartActions.deleteItem(id));
   };
 
-  return (
+  // Render the item based on the layout type
+  return layout === "drawer" ? (
+    // Drawer layout
     <div className="border-0 cart__item list-group-item">
       <div className="cart__item-info d-flex gap-2">
         <img src={image} alt="product-img" />
-
         <div className="cart__product-info w-100 d-flex align-items-center gap-4 justify-content-between">
           <div>
             <h6 className="cart__product-title">{name}</h6>
@@ -48,13 +44,25 @@ const CartItem = ({ item }) => {
               </span>
             </div>
           </div>
-
           <span className="delete__btn" onClick={deleteItem}>
             <i className="ri-close-line"></i>
           </span>
         </div>
       </div>
     </div>
+  ) : (
+    // Table layout
+    <tr>
+      <td className="text-center cart__img-box">
+        <img src={image} alt="" />
+      </td>
+      <td className="text-center">{name}</td>
+      <td className="text-center">${price}</td>
+      <td className="text-center">{quantity}</td>
+      <td className="text-center cart__item-del">
+        <i className="ri-delete-bin-line" onClick={deleteItem}></i>
+      </td>
+    </tr>
   );
 };
 
@@ -68,6 +76,7 @@ CartItem.propTypes = {
     quantity: PropTypes.number.isRequired,
     totalPrice: PropTypes.number.isRequired,
   }).isRequired,
+  layout: PropTypes.string.isRequired,
 };
 
 export default CartItem;

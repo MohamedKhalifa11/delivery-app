@@ -1,16 +1,18 @@
 import Helmet from "../components/Helmet/Helmet";
 import "../styles/cart-page.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { cartActions } from "../store/shopping-cart/cartSlice";
+import CartItem from "../components/Cart/CartItem";
 
 const Cart = () => {
+  // Retrieve cart items and total amount from the Redux store
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
 
   return (
     <Helmet title="Cart">
-      {/* <CommonSection title="Your Cart" /> */}
+      {" "}
+      {/* Set the page title to Cart */}
       <section>
         <div className="container">
           <div className="row">
@@ -30,7 +32,9 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cartItems.map((item) => (
-                      <Tr item={item} key={item.id} />
+                      /* Render each cart item using the CartItem component
+                       by table layout */
+                      <CartItem item={item} key={item.id} layout="table" />
                     ))}
                   </tbody>
                 </table>
@@ -59,29 +63,4 @@ const Cart = () => {
   );
 };
 
-const Tr = (props) => {
-  const { id, image, name, price, quantity } = props.item;
-  const dispatch = useDispatch();
-
-  const deleteItem = () => {
-    dispatch(cartActions.deleteItem(id));
-  };
-
-  return (
-    <tr>
-      <td className="text-center cart__img-box">
-        <img src={image} alt="" />
-      </td>
-      <td className="text-center">{name}</td>
-      <td className="text-center">${price}</td>
-      <td className="text-center">{quantity}</td>
-      <td className="text-center cart__item-del">
-        <i className="ri-delete-bin-line" onClick={deleteItem}></i>
-      </td>
-    </tr>
-  );
-};
-
 export default Cart;
-
-

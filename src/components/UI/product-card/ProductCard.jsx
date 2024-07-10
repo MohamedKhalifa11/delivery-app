@@ -5,10 +5,12 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
 const ProductCard = (props) => {
+  // Destructure item properties from props
   const { id, name, image, price } = props.item;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Function to handle adding the item to the cart
   const addToCart = (e) => {
     e.stopPropagation(); // Prevent the default link behavior
     dispatch(
@@ -21,6 +23,7 @@ const ProductCard = (props) => {
     );
   };
 
+  // Function to navigate to the food details page
   const handleCardClick = () => {
     navigate(`/menu/${id}`);
   };
@@ -28,7 +31,7 @@ const ProductCard = (props) => {
   return (
     <div className="product__item" onClick={handleCardClick}>
       <div className="product__img">
-        <img src={image} alt={name} className="w-50" />
+        <img src={image} alt={name} className="card-food-images" />
       </div>
 
       <div className="product__content">

@@ -7,8 +7,8 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Contact from "../pages/Contact";
 import Blogs from "../pages/Blogs";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+// import Login from "../pages/Login";
+// import Register from "../pages/Register";
 
 const Routers = () => {
   return (
@@ -19,8 +19,8 @@ const Routers = () => {
       <Route path="/menu/:id" element={<FoodDetails />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      {/* <Route path="/login" element={<Login />} /> */}
+      {/* <Route path="/register" element={<Register />} /> */}
       <Route path="/contact" element={<Contact />} />
       <Route path="/blogs" element={<Blogs />} />
     </Routes>

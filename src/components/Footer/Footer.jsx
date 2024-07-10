@@ -1,4 +1,4 @@
-import logo from "../../assets/images/pngegg.png";
+import logo from "../../assets/images/brand.png";
 import "../../styles/footer.css";
 import { Link } from "react-router-dom";
 

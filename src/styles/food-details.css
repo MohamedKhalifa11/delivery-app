@@ -1,3 +1,7 @@
+.food-image {
+  max-height: 300px;
+}
+
 .single__product-content {
   padding-left: 50px;
 }
@@ -97,7 +101,28 @@
   font-size: 1.4rem;
 }
 
+@media only screen and (max-width: 992px) {
+  .food-image {
+    width: 100%;
+    max-height: fit-content;
+  }
+}
+
 @media only screen and (max-width: 768px) {
+
+  /* .food-image {
+    width: 100%;
+    height: auto;
+  } */
+
+  .single__product-content {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
   .product__title {
     font-size: 1.2rem;
   }

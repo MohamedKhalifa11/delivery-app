@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 export const ProductsContext = createContext();
 
@@ -15,7 +15,7 @@ export const ProductsProvider = ({ children }) => {
       setProducts(data.foods);
     };
     fetchProducts();
-  }, []);
+  }, []); // Empty dependency array means this effect runs once on mount
 
   return (
     <ProductsContext.Provider value={products}>

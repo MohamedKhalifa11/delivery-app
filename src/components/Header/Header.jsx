@@ -1,10 +1,11 @@
 import { useRef, useEffect } from "react";
-import logo from "../../assets/images/pngegg.png";
-import { NavLink, Link } from "react-router-dom";
+import logo from "../../assets/images/brand.png";
+import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { cartUiActions } from "../../store/shopping-cart/cartUiSlice";
+import { cartDrawerActions } from "../../store/shopping-cart/cartDrawerSlice";
 import "../../styles/header.css";
 
+// Navigation links for the header
 const nav__links = [
   {
     display: "Home",
@@ -29,17 +30,23 @@ const nav__links = [
 ];
 
 const Header = () => {
+  // Refs for the menu and header
   const menuRef = useRef(null);
   const headerRef = useRef(null);
+
+  // Selectors and dispatch
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const dispatch = useDispatch();
 
+  // Toggle menu visibility
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
+  // Toggle cart drawer visibility (Open Cart drawer)
   const toggleCart = () => {
-    dispatch(cartUiActions.toggle());
+    dispatch(cartDrawerActions.toggle());
   };
 
+  // Handle scroll to add/remove class for header shrink effect
   const handleScroll = () => {
     if (
       document.body.scrollTop > 80 ||
@@ -51,9 +58,9 @@ const Header = () => {
     }
   };
 
+  // Add scroll event listener on component mount and remove on unmount
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -66,7 +73,7 @@ const Header = () => {
             <h5>Pizza Time!</h5>
           </div>
 
-          {/* ======= menu ======= */}
+          {/* Navigation menu */}
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <div className="menu d-flex align-items-center gap-5">
               {nav__links.map((item, index) => (
@@ -83,19 +90,12 @@ const Header = () => {
             </div>
           </div>
 
-          {/* ======== nav right icons ========= */}
+          {/* Nav right side icons */}
           <div className="nav__right d-flex align-items-center gap-4">
             <span className="cart__icon" onClick={toggleCart}>
               <i className="ri-shopping-basket-line"></i>
               <span className="cart__badge">{totalQuantity}</span>
             </span>
-
-            <span className="user">
-              <Link to="/login">
-                <i className="ri-user-line"></i>
-              </Link>
-            </span>
-
             <span className="mobile__menu" onClick={toggleMenu}>
               <i className="ri-menu-line"></i>
             </span>

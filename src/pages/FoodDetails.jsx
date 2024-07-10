@@ -4,26 +4,26 @@ import Helmet from "../components/Helmet/Helmet";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../store/shopping-cart/cartSlice";
 import { ProductsContext } from "../context/ProductsContext";
-
-import "../styles/product-details.css";
-
+import "../styles/food-details.css";
 import ProductCard from "../components/UI/product-card/ProductCard";
 
 const FoodDetails = () => {
   const { id } = useParams();
-  const products = useContext(ProductsContext);
-  const dispatch = useDispatch();
+  const products = useContext(ProductsContext); // Get the fetched foods from context
+  const dispatch = useDispatch(); // Initialize the dispatch function
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [tab, setTab] = useState("desc");
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [reviewMsg, setReviewMsg] = useState("");
+  const [tab, setTab] = useState("desc"); // State for the active tab (description or review)
+  // const [enteredName, setEnteredName] = useState("");
+  // const [enteredEmail, setEnteredEmail] = useState("");
+  // const [reviewMsg, setReviewMsg] = useState("");
 
   useEffect(() => {
+    // Find the selected food based on ID from URL params
     const product = products.find((product) => product.id === Number(id));
     setProduct(product);
     if (product) {
+      // Find related foods excluding the current food
       setRelatedProducts(
         products.filter(
           (item) => item.category === product.category && item.id !== Number(id)
@@ -32,10 +32,12 @@ const FoodDetails = () => {
     }
   }, [id, products]);
 
+  // Scroll to top of the page when the food details are updated or refreshed
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [product]);
 
+  // Handler for adding the product to the cart
   const addItem = () => {
     if (product) {
       dispatch(
@@ -49,23 +51,28 @@ const FoodDetails = () => {
     }
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log(enteredName, enteredEmail, reviewMsg);
-  };
+  // Handler for form submission to submit the review
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log(enteredName, enteredEmail, reviewMsg);
+  // };
 
   if (!product) {
     return <div>Loading...</div>;
   }
 
   return (
-    <Helmet title="Product-details">
+    <Helmet title="food-details">
       <section>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-6">
               <div className="product__main-img">
-                <img src={product.image} alt={product.name} className="w-100" />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="food-image"
+                />
               </div>
             </div>
 
@@ -94,8 +101,8 @@ const FoodDetails = () => {
                   Description
                 </h6>
                 <h6
-                  className={` ${tab === "rev" ? "tab__active" : ""}`}
-                  onClick={() => setTab("rev")}
+                  className={` ${tab === "review" ? "tab__active" : ""}`}
+                  onClick={() => setTab("review")}
                 >
                   Review
                 </h6>
@@ -115,7 +122,7 @@ const FoodDetails = () => {
                     </p>
                   </div>
 
-                  <form className="form" onSubmit={submitHandler}>
+                  {/* <form className="form" onSubmit={submitHandler}>
                     <div className="form__group">
                       <input
                         type="text"
@@ -146,7 +153,7 @@ const FoodDetails = () => {
                     <button type="submit" className="addTOCart__btn">
                       Submit
                     </button>
-                  </form>
+                  </form> */}
                 </div>
               )}
             </div>
@@ -171,4 +178,3 @@ const FoodDetails = () => {
 };
 
 export default FoodDetails;
-
