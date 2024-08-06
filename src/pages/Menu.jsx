@@ -15,13 +15,13 @@ const Menu = () => {
   // Function to handle sorting of products based on selected option
   const handleSort = (products, option) => {
     switch (option) {
-      case "ascending":
+      case "ascending": // From A to Z
         return products.sort((a, b) => a.name.localeCompare(b.name));
-      case "descending":
+      case "descending": // From Z to A
         return products.sort((a, b) => b.name.localeCompare(a.name));
-      case "high-price":
+      case "high-price": // From Highest price to Lowest
         return products.sort((a, b) => b.price - a.price);
-      case "low-price":
+      case "low-price": // From Lowest price to Highest
         return products.sort((a, b) => a.price - b.price);
       default:
         return products;
