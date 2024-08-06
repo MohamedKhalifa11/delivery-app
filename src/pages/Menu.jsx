@@ -28,20 +28,28 @@ const Menu = () => {
     }
   };
 
+  // // Filter products based on search term
+  // const searchedProduct = products.filter((item) => {
+  //   if (searchTerm === "") {
+  //     return item;
+  //   }
+  //   if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+  //     return item;
+  //   } else {
+  //     return null;
+  //   }
+  // });
+
+  // // Sort products based on selected sort option
+  // const sortedProducts = handleSort([...searchedProduct], sortOption);
+
   // Filter products based on search term
-  const searchedProduct = products.filter((item) => {
-    if (searchTerm === "") {
-      return item;
-    }
-    if (item.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return item;
-    } else {
-      return null;
-    }
-  });
+  const searchedProduct = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Sort products based on selected sort option
-  const sortedProducts = handleSort([...searchedProduct], sortOption);
+  const sortedProducts = handleSort(searchedProduct, sortOption);
 
   // Pagination logic
   const productPerPage = 12; // Number of products per page
