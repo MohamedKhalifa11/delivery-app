@@ -1,5 +1,4 @@
-// import { useRef, useEffect } from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import logo from "../../assets/images/brand.png";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +32,7 @@ const nav__links = [
 const Header = () => {
   // Refs for the menu and header
   const menuRef = useRef(null);
-  // const headerRef = useRef(null);
+  const headerRef = useRef(null);
 
   // Selectors and dispatch
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -48,26 +47,26 @@ const Header = () => {
   };
 
   // Handle scroll to add/remove class for header shrink effect
-  // const handleScroll = () => {
-  //   if (
-  //     document.body.scrollTop > 80 ||
-  //     document.documentElement.scrollTop > 80
-  //   ) {
-  //     headerRef.current.classList.add("header__shrink");
-  //   } else {
-  //     headerRef.current.classList.remove("header__shrink");
-  //   }
-  // };
+  const handleScroll = () => {
+    if (
+      document.body.scrollTop > 80 ||
+      document.documentElement.scrollTop > 80
+    ) {
+      headerRef.current.classList.add("header__shrink");
+    } else {
+      headerRef.current.classList.remove("header__shrink");
+    }
+  };
 
-  // // Add scroll event listener on component mount and remove on unmount
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
+  // Add scroll event listener on component mount and remove on unmount
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    // <header className="header" ref={headerRef}>
-    <header className="header header__shrink">
+    <header className="header" ref={headerRef}>
+      {/* <header className="header header__shrink"> */}
       <div className="container">
         <div className="nav__wrapper d-flex align-items-center justify-content-between">
           <div className="logo">
