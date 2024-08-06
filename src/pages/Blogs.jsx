@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
+import axios from "axios";
 
 const Blogs = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -7,11 +8,10 @@ const Blogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://raw.githubusercontent.com/MohamedKhalifa11/foods-api/main/blogs.json"
         );
-        const data = await response.json();
-        setBlogPosts(data.blogs);
+        setBlogPosts(response.data.blogs);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       }
