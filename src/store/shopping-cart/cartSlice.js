@@ -112,6 +112,16 @@ const cartSlice = createSlice({
       // Save updated cart state to localStorage
       setItemFunc(state.cartItems, state.totalAmount, state.totalQuantity);
     },
+
+    // Clear the Cart
+    clearCart(state) {
+      state.cartItems = [];
+      state.totalQuantity = 0;
+      state.totalAmount = 0;
+
+      // Update localStorage
+      setItemFunc(state.cartItems, state.totalAmount, state.totalQuantity);
+    },
   },
 });
 

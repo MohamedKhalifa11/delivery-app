@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Helmet from "../components/Helmet/Helmet";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import Swal from "sweetalert2";
 
 import "../styles/checkout.css";
 import { useNavigate } from "react-router-dom";
+import { cartActions } from "../store/shopping-cart/cartSlice";
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
@@ -25,6 +26,7 @@ const Checkout = () => {
 
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -51,11 +53,11 @@ const Checkout = () => {
         confirmButtonText: "OK",
         confirmButtonColor: "#F8983D",
       }).then(() => {
+        dispatch(cartActions.clearCart());
         navigate("/menu");
       });
     } else {
       console.error("Payment failed", error);
-
       // Show SweetAlert on payment failure
       Swal.fire({
         // title: "Payment Failed",
