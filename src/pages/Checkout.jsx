@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Helmet from "../components/Helmet/Helmet";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import Swal from "sweetalert2";
 
 import "../styles/checkout.css";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const [enterName, setEnterName] = useState("");
@@ -20,8 +23,51 @@ const Checkout = () => {
   // Calculate total amount including shipping cost
   const totalAmount = cartTotalAmount + Number(shippingCost);
 
-  const submitHandler = (e) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
+
+    if (!error) {
+      // Payment succeeded, process the payment and store shipping info.
+      console.log("Payment successful", paymentMethod);
+      Swal.fire({
+        // title: "Payment Successful!",
+        html: `
+        <h2 style="color: #53392E;">Thank you for your payment!</h2>
+        <p>Your payment was processed successfully.</p>
+        <span style= "color: #F8983D;">Your food will arrive in 40 minutes!</span>
+        `,
+        icon: "success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#F8983D",
+      }).then(() => {
+        navigate("/menu");
+      });
+    } else {
+      console.error("Payment failed", error);
+
+      // Show SweetAlert on payment failure
+      Swal.fire({
+        // title: "Payment Failed",
+        html: `<h2 style="color: #53392E;">Payment Failed.</h2>
+        <span>There was an issue with your payment: ${error.message}</span>`,
+        // text: `There was an issue with your payment: ${error.message}`,
+        icon: "error",
+        confirmButtonText: "Try Again",
+        confirmButtonColor: "#F8983D",
+      });
+    }
+
     const userShippingAddress = {
       name: enterName,
       email: enterEmail,
@@ -36,7 +82,8 @@ const Checkout = () => {
   };
 
   return (
-    <Helmet title="Checkout"> {/* Set the page title to "Checkout" */}
+    <Helmet title="Checkout">
+      {/* Set the page title to "Checkout" */}
       <section>
         <div className="container">
           <div className="row">
@@ -98,8 +145,12 @@ const Checkout = () => {
                     onChange={(e) => setPostalCode(e.target.value)}
                   />
                 </div>
+                <h6 className="my-3">Payment Details</h6>
+                <div className="form__group mb-3">
+                  <CardElement />
+                </div>
                 <button type="submit" className="btn btn-primary">
-                  Payment
+                  Pay Now
                 </button>
               </form>
             </div>
