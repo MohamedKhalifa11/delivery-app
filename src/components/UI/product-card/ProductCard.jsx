@@ -1,12 +1,15 @@
-import "../../../styles/product-card.css";
-
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../../store/shopping-cart/cartSlice";
 
+import "../../../styles/product-card.css";
+import "../../../styles/product-loading.css";
+
 const ProductCard = (props) => {
   // Destructure item properties from props
   const { id, name, image, price } = props.item;
+  const [isImageLoading, setIsImageLoading] = useState(true); // Loading state for image
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,15 +31,35 @@ const ProductCard = (props) => {
     navigate(`/menu/${id}`);
   };
 
+  // Function to handle image load completion
+  const handleImageLoad = () => {
+    setIsImageLoading(false); // Hide loader once image has loaded
+  };
+
   return (
     <div className="product__item" onClick={handleCardClick}>
       <div className="product__img">
-        <img src={image} alt={name} className="card-food-images" />
+        {isImageLoading && (
+          <div className="lds-ring-container">
+            <div className="lds-ring">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        )}
+        <img
+          src={image}
+          alt={name}
+          onLoad={handleImageLoad} // Call function when the image loads
+          className={` ${isImageLoading ? "image-hidden" : "card-food-images"}`}
+        />
       </div>
 
       <div className="product__content">
         <h5>{name}</h5>
-        <div className=" d-flex align-items-center justify-content-between ">
+        <div className="d-flex align-items-center justify-content-between">
           <span className="product__price">${price}</span>
           <button className="addTOCart__btn" onClick={addToCart}>
             Add to Cart

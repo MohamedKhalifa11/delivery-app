@@ -1,19 +1,20 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Suspense, lazy } from "react";
 import Helmet from "../components/Helmet/Helmet.jsx";
 import heroImg from "../assets/images/hero.png";
-import "../styles/hero-section.css";
 import { Link } from "react-router-dom";
 import Category from "../components/UI/category/Category.jsx";
-import "../styles/home.css";
 import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
 import featureImg03 from "../assets/images/service-03.png";
-import ProductCard from "../components/UI/product-card/ProductCard.jsx";
+// import ProductCard from "../components/UI/product-card/ProductCard.jsx";
 import whyImg from "../assets/images/Delivery-amico.svg";
 import networkImg from "../assets/images/Online Review-pana.svg";
 import TestimonialSlider from "../components/UI/slider/TestimonialSlider.jsx";
 import { ProductsContext } from "../context/ProductsContext.jsx";
 
+import "../styles/home.css";
+import "../styles/hero-section.css";
+import "../styles/product-loading.css";
 // Array data for feature section
 const featureData = [
   {
@@ -36,12 +37,16 @@ const featureData = [
 const Home = () => {
   const products = useContext(ProductsContext); // Context for Foods data
   const [hotPizza, setHotPizza] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+
+  const ProductCard = lazy(() =>
+    import("../components/UI/product-card/ProductCard.jsx")
+  );
 
   useEffect(() => {
-    if (products.length > 0) {
-      setLoading(false);
-    }
+    // if (products.length > 0) {
+    //   setLoading(false);
+    // }
 
     // Filter and slice products to get the top 4 pizzas
     const filteredPizza = products.filter((item) => item.category === "Pizza");
@@ -209,18 +214,31 @@ const Home = () => {
             <div className="col-lg-12 text-center mb-5">
               <h2>Hot Pizza</h2>
             </div>
-            {loading ? (
+            {/* {loading ? (
               <div>Loading...</div>
-            ) : (
-              hotPizza.map((item) => (
-                <div
-                  className="col-lg-3 col-md-4 col-sm-6 col-xs-6"
-                  key={item.id}
+            ) : ( */}
+            {hotPizza.map((item) => (
+              <div
+                className="col-lg-3 col-md-4 col-sm-6 col-xs-6"
+                key={item.id}
+              >
+                <Suspense
+                  fallback={
+                    <div className="lds-ring-container">
+                      <div className="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                  }
                 >
                   <ProductCard item={item} />
-                </div>
-              ))
-            )}
+                </Suspense>
+              </div>
+            ))}
+            {/* )} */}
           </div>
         </div>
       </section>

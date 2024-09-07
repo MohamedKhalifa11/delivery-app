@@ -1,12 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, lazy, Suspense } from "react";
 import Helmet from "../components/Helmet/Helmet";
-import ProductCard from "../components/UI/product-card/ProductCard";
+// import ProductCard from "../components/UI/product-card/ProductCard";
 import ReactPaginate from "react-paginate";
 import { ProductsContext } from "../context/ProductsContext";
 import "../styles/menu.css";
+import "../styles/product-loading.css";
 import "../styles/pagination.css";
 
 const Menu = () => {
+  const ProductCard = lazy(() =>
+    import("../components/UI/product-card/ProductCard.jsx")
+  );
   const products = useContext(ProductsContext); // Fetch products from context
   const [searchTerm, setSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
@@ -106,7 +110,20 @@ const Menu = () => {
                 className="col-lg-3 col-md-4 col-sm-6 col-6 mb-4"
                 key={item.id}
               >
-                <ProductCard item={item} />
+                <Suspense
+                  fallback={
+                    <div className="lds-ring-container">
+                      <div className="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    </div>
+                  }
+                >
+                  <ProductCard item={item} />
+                </Suspense>
               </div>
             ))}
 
