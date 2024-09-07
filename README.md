@@ -42,4 +42,4 @@ Pizza Time! is a modern, user-friendly app that allows users to explore a divers
 
 ## Credits
 
-- **Author:** Mohamed Khalifa
+- **Developed by:** Mohamed Khalifa
