@@ -151,7 +151,7 @@ const Checkout = () => {
                 <div className="form__group mb-3">
                   <CardElement />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="payment__btn">
                   Pay Now
                 </button>
               </form>
